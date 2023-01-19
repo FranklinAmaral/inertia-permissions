@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\ManageAccess;
 
-use App\Models\Access;
+use App\Http\Controllers\Controller;
+use App\Models\ManageAccess\Profile;
+use App\Http\Resources\ManageAccess\ProfileResource;
+
 use Illuminate\Http\Request;
 
-class AccessController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +17,13 @@ class AccessController extends Controller
      */
     public function index()
     {
-        //
+        // $this->authorize('viewAny', Post::class);
+        // $posts = PostResource::collection(Post::all());
+
+        $profiles = ProfileResource::collection(Profile::all());
+        // $profiles = Profile::all();
+        // dd($profiles);
+        return inertia('Profiles/Index', compact('profiles'));
     }
 
     /**
@@ -41,10 +50,10 @@ class AccessController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Access  $access
+     * @param  \App\Models\ManageAccess\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function show(Access $access)
+    public function show(Profile $profile)
     {
         //
     }
@@ -52,22 +61,24 @@ class AccessController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Access  $access
+     * @param  \App\Models\ManageAccess\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function edit(Access $access)
+    public function edit(Profile $profile)
     {
-        //
+        // dd($profile->statusName());
+        // $this->authorize('edit', Profile::class);
+        return inertia('Profiles/Edit', compact('profile'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Access  $access
+     * @param  \App\Models\ManageAccess\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Access $access)
+    public function update(Request $request, Profile $profile)
     {
         //
     }
@@ -75,10 +86,10 @@ class AccessController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Access  $access
+     * @param  \App\Models\ManageAccess\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Access $access)
+    public function destroy(Profile $profile)
     {
         //
     }

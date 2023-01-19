@@ -19,7 +19,7 @@ Route::redirect('/', 'login');
 Route::group(['middleware' => 'auth'], function() {
     Route::resource('posts', \App\Http\Controllers\PostController::class);
     Route::inertia('pages/about', 'About')->name('pages.about');
-    Route::resource('access', AccessController::class);
+    Route::resource('profiles', \App\Http\Controllers\ManageAccess\ProfileController::class);
 });
 
 Route::inertia('login', 'Auth/Login')->name('login');
