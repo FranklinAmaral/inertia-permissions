@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\ManageAccess;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProfileRequest;
 use App\Models\ManageAccess\Profile;
 use App\Http\Resources\ManageAccess\ProfileResource;
-
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
@@ -20,6 +22,7 @@ class ProfileController extends Controller
         // $this->authorize('viewAny', Post::class);
         // $posts = PostResource::collection(Post::all());
 
+        $this->authorize('viewAny', Profile::class);
         $profiles = ProfileResource::collection(Profile::all());
         // $profiles = Profile::all();
         // dd($profiles);
@@ -33,7 +36,8 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        //
+        // $this->authorize('edit', Profile::class);
+        // return inertia('Profiles/Create');
     }
 
     /**
@@ -66,8 +70,7 @@ class ProfileController extends Controller
      */
     public function edit(Profile $profile)
     {
-        // dd($profile->statusName());
-        // $this->authorize('edit', Profile::class);
+        $this->authorize('viewAny', Profile::class);
         return inertia('Profiles/Edit', compact('profile'));
     }
 
@@ -78,9 +81,13 @@ class ProfileController extends Controller
      * @param  \App\Models\ManageAccess\Profile  $profile
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Profile $profile)
+    public function update(Profile $profile, StoreProfileRequest $request)
     {
-        //
+        $this->authorize('update', Profile::class);
+        $profile->update($request->validated());
+
+        return redirect()->route('profiles.index')
+            ->with('message', 'Profile updated successfully');
     }
 
     /**
