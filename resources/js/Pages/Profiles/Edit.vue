@@ -17,8 +17,10 @@
                     <label for="status" class="block font-medium text-sm text-gray-700">
                         Status
                     </label>
-                    <input v-if = "form.status == true" checked type="checkbox"  name="status">
-                    <input v-else-if = "form.status == false"  type="checkbox"  name="status"> {{ form.status_name }}
+                    <!-- PRIMEIRA TENTATIVA -->
+                    <input v-if="form.status == 1 "  checked type="checkbox" name="status" v-model="form.status">
+                    <input v-else type="checkbox" name="status"  v-model="form.status"> {{ form.status_name }}
+
                     <div v-if="errors.status" class="text-red-600">
                         {{ errors.status }}
                     </div>

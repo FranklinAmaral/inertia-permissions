@@ -25,6 +25,7 @@ class StoreProfileRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3',
+            'status' => 'required_without_all'
         ];
     }
 }

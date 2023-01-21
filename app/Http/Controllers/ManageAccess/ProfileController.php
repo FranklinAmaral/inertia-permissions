@@ -36,8 +36,8 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        // $this->authorize('edit', Profile::class);
-        // return inertia('Profiles/Create');
+        $this->authorize('create', Profile::class);
+        return inertia('Profiles/Create');
     }
 
     /**
@@ -46,9 +46,13 @@ class ProfileController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProfileRequest $request)
     {
-        //
+        $this->authorize('create', Profile::class);
+        Profile::create($request->validated());
+
+        return redirect()->route('profiles.index')
+            ->with('message', 'Profile created successfully');
     }
 
     /**
@@ -84,6 +88,8 @@ class ProfileController extends Controller
     public function update(Profile $profile, StoreProfileRequest $request)
     {
         $this->authorize('update', Profile::class);
+        // dd($request->status);
+        $request->status = ($request->status) ? 1 : 0;
         $profile->update($request->validated());
 
         return redirect()->route('profiles.index')
@@ -98,6 +104,10 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $this->authorize('delete', Profile::class);
+        $profile->delete();
+
+        return redirect()->route('profiles.index')
+            ->with('message', 'Profile deleted successfully');
     }
 }
