@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\ManageAccess\UserResource;
+use App\Models\ManageAccess\Profile;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -70,7 +71,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $this->authorize('update', User::class);
-        return inertia('Users/Edit', compact('user'));
+        $profiles = Profile::all();
+
+        return inertia('Users/Edit', compact('user', 'profiles'));
     }
 
     /**
@@ -80,9 +83,10 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         $this->authorize('update', User::class);
+        dd($request->all());
         $user->update($request->validated());
 
         return redirect()->route('users.index')

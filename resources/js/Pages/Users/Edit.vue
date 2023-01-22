@@ -21,6 +21,20 @@
                         {{ errors.email }}
                     </div>
                 </div>
+
+                <div class="mt-4">
+                    <label for="profile_id" class="block font-medium text-sm text-gray-700">
+                        Profile
+                    </label>
+                    <div v-for="(profile, key) in profiles" >
+                        <input type="checkbox" id="profile_id" name="profile_id" :value="key"> {{ profile.name }}<br/>
+                    </div>
+                    <div v-if="errors.profile_id" class="text-red-600">
+                        {{ errors.profile_id }}
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="py-4">
@@ -45,6 +59,7 @@ export default {
     },
     props: {
         user: Object,
+        profiles: Object,
         errors: Object
     },
     setup(props) {
