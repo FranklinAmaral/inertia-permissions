@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::resource('posts', \App\Http\Controllers\PostController::class);
     Route::inertia('pages/about', 'About')->name('pages.about');
     Route::resource('profiles', \App\Http\Controllers\ManageAccess\ProfileController::class);
+    Route::resource('users', \App\Http\Controllers\ManageAccess\UserController::class);
 });
 
 Route::inertia('login', 'Auth/Login')->name('login');
